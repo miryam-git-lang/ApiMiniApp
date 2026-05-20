@@ -23,7 +23,7 @@ public class TicketController(AppDbContext context,IMapper mapper) : Controller
     [HttpGet("{id}")]
     public async Task<IActionResult> Get(int id)
     {
-        return Ok(context.Organizers
+        return Ok(context.Tickets
             .Where(x => x.Id == id)
             .ProjectTo<TicketReturnDto>(mapper.ConfigurationProvider)
             .FirstOrDefaultAsync()
@@ -54,7 +54,37 @@ public class TicketController(AppDbContext context,IMapper mapper) : Controller
         mapper.Map(ticketUpdateDto, existingTicket);
         await context.SaveChangesAsync();
         return NoContent();
-        
-        
+    }
+
+    [HttpPatch("{id}")]
+    public async Task<IActionResult> Patch(int id, [FromBody] TicketUpdateDto ticketUpdateDto)
+    {
+        var existingTicket = await context.Tickets.FindAsync(id);
+        if (existingTicket == null)
+        {
+            return NotFound();
+        }
+
+        if (!string.IsNullOrEmpty(ticketUpdateDto.Type))
+        {
+            existingTicket.Type = ticketUpdateDto.Type;
+            existingTicket.UpdatedAt = DateTime.Now;
+            await context.SaveChangesAsync();
+        }
+        return NoContent();
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(int id)
+    {
+        var ticket = await context.Tickets.FindAsync(id);
+      
+        if(ticket == null)
+        {
+            return NotFound();
+        }
+        context.Tickets.Remove(ticket);
+        await context.SaveChangesAsync();
+        return NoContent();
     }
 }

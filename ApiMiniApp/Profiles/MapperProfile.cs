@@ -1,6 +1,8 @@
 using AutoMapper;
 using ApiMiniApp.Models;
 using ApiMiniApp.Dtos;
+using ApiMiniApp.Extensions;
+
 namespace ApiMiniApp.Profiles;
 
 public class MapperProfile : Profile
@@ -8,16 +10,21 @@ public class MapperProfile : Profile
     public MapperProfile()
     {
         CreateMap<Event, EventsInOrganizerReturnDto>();
-        CreateMap<Event, EventCreateDto>();
+        CreateMap<EventCreateDto, Event>();
         CreateMap<Event, EventReturnDto>();
         
         CreateMap<Organizer, OrganizerInEventReturnDto>();
-        CreateMap<Organizer,OrganizerCreateDto>();
+        CreateMap<OrganizerCreateDto, Organizer>();
         CreateMap<Organizer, OrganizerReturnDto>();
         
-        CreateMap<Ticket, TicketCreateDto>();
+        CreateMap<TicketCreateDto, Ticket>();
         CreateMap<Ticket, TicketReturnDto>();
         CreateMap<Ticket, TicketUpdateDto>();
+        
+        CreateMap<EventCreateFileDto, Event>()
+            .ForMember(dest => dest.BannerImageUrl, opt => opt.MapFrom(src => src.File.SaveFile("wwwroot/images")));
+        CreateMap<OrganizerCreateFileDto, Organizer>()
+            .ForMember(dest => dest.LogoUrl, opt => opt.MapFrom(src => src.File.SaveFile("wwwroot/images")));
         
 
     }

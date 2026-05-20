@@ -41,4 +41,109 @@ public class OrganizerController(AppDbContext context, IMapper mapper) : Control
         await context.SaveChangesAsync();
         return Created();
     }
+    
+    [HttpPut("{id}")]
+    public async Task<IActionResult> Put(int id, [FromBody] OrganizerUpdateDto organizerUpdateDto)
+    {
+        if (id != organizerUpdateDto.Id)
+        {
+            return BadRequest();
+        }
+        var existingorganizer = await context.Organizers.FindAsync(id);
+        if (existingorganizer == null)
+        {
+            return NotFound();
+        }
+        if(existingorganizer.Name != organizerUpdateDto.Name && await context.Organizers.AnyAsync(e => e.Name == organizerUpdateDto.Name))
+        {
+            return BadRequest("An organizer with the same name already exists.");
+        }
+        
+        mapper.Map(organizerUpdateDto, existingorganizer);
+        await context.SaveChangesAsync();
+        return NoContent();
+    }
+
+    [HttpPatch("{id}")]
+    public async Task<IActionResult> Patch(int id, [FromBody] OrganizerUpdateDto organizerUpdateDto)
+    {
+        var existingorganizer = await context.Organizers.FindAsync(id);
+        if (existingorganizer == null)
+        {
+            return NotFound();
+        }
+
+        if (!string.IsNullOrEmpty(organizerUpdateDto.Name))
+        {
+            existingorganizer.Name = organizerUpdateDto.Name;
+            existingorganizer.UpdatedAt = DateTime.Now;
+            await context.SaveChangesAsync();
+        }
+
+        return NoContent();
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(int id)
+    {
+        var organizer = await context.Organizers.FindAsync(id);
+      
+        if(organizer == null)
+        {
+            return NotFound();
+        }
+        context.Organizers.Remove(organizer);
+        await context.SaveChangesAsync();
+        return NoContent();
+    }
+    [HttpPost("{id}/logoUrl")]
+    public async Task<IActionResult> AddFileToorganizer(int id, [FromForm]OrganizerCreateFileDto organizerCreateFileDto)
+    {
+        var organizer = await context.Organizers.FindAsync(id);
+        if (organizer == null)
+        {
+            return NotFound();
+        }
+        if(organizer.LogoUrl != null)
+        {
+            return BadRequest("This organizer already has a banner image.");
+        }
+      
+        mapper.Map(organizerCreateFileDto, organizer);
+        await context.SaveChangesAsync();
+        return NoContent();
+    }
+    [HttpGet("{organizerId}/events")]
+    public async Task<ActionResult> GetEventsByOrganizer(int organizerId)
+    {
+        var organizerExist = await context.Organizers.AnyAsync(e => e.Id == organizerId);
+        if (!organizerExist)
+        {
+            return NotFound();
+        }
+
+        var eventsInOrganizer = context.Events.Where(t => t.OrganizerId == organizerId)
+            .ProjectTo<EventReturnDto>(mapper.ConfigurationProvider);
+        
+        return Ok(eventsInOrganizer);
+    }
+    
+    [HttpPost("{organizerId}/logo")]
+    public async Task<ActionResult> AddFileToOrganizerById(int organizerId, [FromForm] OrganizerCreateFileDto organizerCreateFileDto)
+    {
+        var organizerEntity = await context.Organizers.FindAsync(organizerId);
+        if (organizerEntity == null)
+        {
+            return NotFound();
+        }
+        if(organizerEntity.LogoUrl != null)
+        {
+            return BadRequest("This organizer already has a banner image.");
+        }
+      
+        mapper.Map(organizerCreateFileDto, organizerEntity);
+        await context.SaveChangesAsync();
+        return NoContent();
+    }
+    
 }
