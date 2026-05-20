@@ -162,3 +162,5 @@
 /Users/miriam/Desktop/Academy Tasks/Mini Apps/ApiMiniApp/ApiMiniApp/bin/Debug/net10.0/AutoMapper.dll
 /Users/miriam/Desktop/Academy Tasks/Mini Apps/ApiMiniApp/ApiMiniApp/obj/Debug/net10.0/ApiMiniApp.sourcelink.json
 /Users/miriam/Desktop/Academy Tasks/Mini Apps/ApiMiniApp/ApiMiniApp/bin/Debug/net10.0/ApiMiniApp.staticwebassets.runtime.json
+/Users/miriam/Desktop/Academy Tasks/Mini Apps/ApiMiniApp/ApiMiniApp/bin/Debug/net10.0/FluentValidation.dll
+/Users/miriam/Desktop/Academy Tasks/Mini Apps/ApiMiniApp/ApiMiniApp/bin/Debug/net10.0/Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll

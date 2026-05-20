@@ -15,7 +15,7 @@ public class TicketController(AppDbContext context,IMapper mapper) : Controller
     [HttpGet]
     public async Task<IActionResult> Get()
     {
-        return Ok(context.Organizers
+        return Ok(await context.Tickets
             .ProjectTo<TicketReturnDto>(mapper.ConfigurationProvider)
             .ToListAsync());
     }
@@ -23,7 +23,7 @@ public class TicketController(AppDbContext context,IMapper mapper) : Controller
     [HttpGet("{id}")]
     public async Task<IActionResult> Get(int id)
     {
-        return Ok(context.Tickets
+        return Ok(await context.Tickets
             .Where(x => x.Id == id)
             .ProjectTo<TicketReturnDto>(mapper.ConfigurationProvider)
             .FirstOrDefaultAsync()
@@ -33,7 +33,7 @@ public class TicketController(AppDbContext context,IMapper mapper) : Controller
     public async Task<IActionResult> Post([FromBody] TicketCreateDto ticketCreateDto)
     {
         var newTicket = mapper.Map<Ticket>(ticketCreateDto);
-        context.Tickets.Add(newTicket);
+        await context.Tickets.AddAsync(newTicket);
         await context.SaveChangesAsync();
         return Created();
     }

@@ -54,6 +54,19 @@
           }
         }
       },
+      "FluentValidation/12.1.1": {
+        "type": "package",
+        "compile": {
+          "lib/net8.0/FluentValidation.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/FluentValidation.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "Humanizer.Core/2.14.1": {
         "type": "package",
         "compile": {
@@ -63,6 +76,22 @@
         },
         "runtime": {
           "lib/net6.0/Humanizer.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Microsoft.AspNetCore.Identity.EntityFrameworkCore/10.0.7": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore.Relational": "10.0.7"
+        },
+        "compile": {
+          "lib/net10.0/Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net10.0/Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll": {
             "related": ".xml"
           }
         }
@@ -671,6 +700,19 @@
           "buildTransitive/net8.0/_._": {}
         }
       },
+      "Microsoft.Extensions.Identity.Core/10.0.7": {
+        "type": "package",
+        "compile": {
+          "lib/net10.0/_._": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net10.0/_._": {
+            "related": ".xml"
+          }
+        }
+      },
       "Microsoft.Identity.Client/4.73.1": {
         "type": "package",
         "dependencies": {
@@ -1230,6 +1272,21 @@
         "lib/netstandard2.0/Azure.Identity.xml"
       ]
     },
+    "FluentValidation/12.1.1": {
+      "sha512": "EPpkIe1yh1a0OXyC100oOA8WMbZvqUu5plwhvYcb7oSELfyUZzfxV48BLhvs3kKo4NwG7MGLNgy1RJiYtT8Dpw==",
+      "type": "package",
+      "path": "fluentvalidation/12.1.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "fluent-validation-icon.png",
+        "fluentvalidation.12.1.1.nupkg.sha512",
+        "fluentvalidation.nuspec",
+        "lib/net8.0/FluentValidation.dll",
+        "lib/net8.0/FluentValidation.xml"
+      ]
+    },
     "Humanizer.Core/2.14.1": {
       "sha512": "lQKvtaTDOXnoVJ20ibTuSIOf2i0uO0MPbDhd1jm238I+U/2ZnRENj0cktKZhtchBMtCUSRQ5v4xBCUbKNmyVMw==",
       "type": "package",
@@ -1246,6 +1303,22 @@
         "lib/netstandard2.0/Humanizer.dll",
         "lib/netstandard2.0/Humanizer.xml",
         "logo.png"
+      ]
+    },
+    "Microsoft.AspNetCore.Identity.EntityFrameworkCore/10.0.7": {
+      "sha512": "WAMNMV7m019wBaem9YAyK+nsR6r5ixBL/kOPybO9QhEkwG4dOeVG3vvTTkI5I6q6fp5+MN6IuYxxV/2HYiI9vw==",
+      "type": "package",
+      "path": "microsoft.aspnetcore.identity.entityframeworkcore/10.0.7",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "PACKAGE.md",
+        "THIRD-PARTY-NOTICES.TXT",
+        "lib/net10.0/Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll",
+        "lib/net10.0/Microsoft.AspNetCore.Identity.EntityFrameworkCore.xml",
+        "microsoft.aspnetcore.identity.entityframeworkcore.10.0.7.nupkg.sha512",
+        "microsoft.aspnetcore.identity.entityframeworkcore.nuspec"
       ]
     },
     "Microsoft.AspNetCore.OpenApi/10.0.7": {
@@ -2894,6 +2967,25 @@
         "useSharedDesignerContext.txt"
       ]
     },
+    "Microsoft.Extensions.Identity.Core/10.0.7": {
+      "sha512": "br70n9iuhhn4HU6DrNH96/Rdh6dnW72VoLioQ9UF+XYSjAEREe1TqgyuvUJBVJzayRyuy+rWQrx3eOF38udeSQ==",
+      "type": "package",
+      "path": "microsoft.extensions.identity.core/10.0.7",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "THIRD-PARTY-NOTICES.TXT",
+        "lib/net10.0/Microsoft.Extensions.Identity.Core.dll",
+        "lib/net10.0/Microsoft.Extensions.Identity.Core.xml",
+        "lib/net462/Microsoft.Extensions.Identity.Core.dll",
+        "lib/net462/Microsoft.Extensions.Identity.Core.xml",
+        "lib/netstandard2.0/Microsoft.Extensions.Identity.Core.dll",
+        "lib/netstandard2.0/Microsoft.Extensions.Identity.Core.xml",
+        "microsoft.extensions.identity.core.10.0.7.nupkg.sha512",
+        "microsoft.extensions.identity.core.nuspec"
+      ]
+    },
     "Microsoft.Identity.Client/4.73.1": {
       "sha512": "NnDLS8QwYqO5ZZecL2oioi1LUqjh5Ewk4bMLzbgiXJbQmZhDLtKwLxL3DpGMlQAJ2G4KgEnvGPKa+OOgffeJbw==",
       "type": "package",
@@ -3612,10 +3704,13 @@
   "projectFileDependencyGroups": {
     "net10.0": [
       "AutoMapper >= 16.1.1",
+      "FluentValidation >= 12.1.1",
+      "Microsoft.AspNetCore.Identity.EntityFrameworkCore >= 10.0.7",
       "Microsoft.AspNetCore.OpenApi >= 10.0.7",
       "Microsoft.EntityFrameworkCore.Design >= 10.0.7",
       "Microsoft.EntityFrameworkCore.SqlServer >= 10.0.7",
       "Microsoft.EntityFrameworkCore.Tools >= 10.0.7",
+      "Microsoft.Extensions.Identity.Core >= 10.0.7",
       "Swashbuckle.AspNetCore >= 10.1.7"
     ]
   },
@@ -3666,6 +3761,14 @@
             "target": "Package",
             "version": "[16.1.1, )"
           },
+          "FluentValidation": {
+            "target": "Package",
+            "version": "[12.1.1, )"
+          },
+          "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+            "target": "Package",
+            "version": "[10.0.7, )"
+          },
           "Microsoft.AspNetCore.OpenApi": {
             "target": "Package",
             "version": "[10.0.7, )"
@@ -3683,6 +3786,10 @@
           "Microsoft.EntityFrameworkCore.Tools": {
             "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
             "suppressParent": "All",
+            "target": "Package",
+            "version": "[10.0.7, )"
+          },
+          "Microsoft.Extensions.Identity.Core": {
             "target": "Package",
             "version": "[10.0.7, )"
           },
@@ -4127,5 +4234,17 @@
         }
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "NU1510",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "PackageReference Microsoft.Extensions.Identity.Core will not be pruned. Consider removing this package from your dependencies, as it is likely unnecessary.",
+      "libraryId": "Microsoft.Extensions.Identity.Core",
+      "targetGraphs": [
+        "net10.0"
+      ]
+    }
+  ]
 }

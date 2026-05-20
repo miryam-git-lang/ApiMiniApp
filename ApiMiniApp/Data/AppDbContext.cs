@@ -1,14 +1,17 @@
 using Microsoft.EntityFrameworkCore;
 using ApiMiniApp.Models;
 using ApiMiniApp.Models.Common;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace ApiMiniApp.Data;
 
-public class AppDbContext : DbContext
+public class AppDbContext : IdentityDbContext<AppUser>
 {
     public DbSet<Event> Events { get; set; }
     public DbSet<Ticket> Tickets { get; set; } 
     public DbSet<Organizer> Organizers { get; set; } 
+    public DbSet<AppUser> AppUsers { get; set; }
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
     {
         
