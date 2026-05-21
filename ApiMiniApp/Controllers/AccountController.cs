@@ -6,5 +6,5 @@ namespace ApiMiniApp.Controllers;
 [ApiController]
 public class AccountController : Controller
 {
-    
+ 
 }

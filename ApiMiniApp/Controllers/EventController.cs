@@ -29,12 +29,16 @@ public class EventController(AppDbContext context, IMapper mapper) : Controller
    }
 
    [HttpPost]
-   public async Task <IActionResult> Post([FromBody]EventCreateDto eventCreateDto)
+   public async Task <IActionResult> Post([FromForm]EventCreateDto eventCreateDto)
    {
       if(await context.Events.AnyAsync(e => e.Title == eventCreateDto.Title))
       {
          return BadRequest("An event with the same name already exists.");
       }
+      var organizerExists = await context.Organizers.AnyAsync(o => o.Id == eventCreateDto.OrganizerId);
+      if (!organizerExists)
+         return BadRequest("Organizer not found");
+      
       var newEvent = mapper.Map<Event>(eventCreateDto);
       context.Events.Add(newEvent);
       await context.SaveChangesAsync();
@@ -44,10 +48,6 @@ public class EventController(AppDbContext context, IMapper mapper) : Controller
    [HttpPut("{id}")]
    public async Task<IActionResult> Put(int id, [FromForm] EventUpdateDto eventUpdateDto)
    {
-      if (id != eventUpdateDto.Id)
-      {
-         return BadRequest();
-      }
       var existingEvent = await context.Events.FindAsync(id);
       if (existingEvent == null)
       {
@@ -57,6 +57,9 @@ public class EventController(AppDbContext context, IMapper mapper) : Controller
       {
          return BadRequest("An event with the same name already exists.");
       }
+      var organizerExists = await context.Organizers.AnyAsync(o => o.Id == eventUpdateDto.OrganizerId);
+      if (!organizerExists)
+         return BadRequest("Organizer not found");
         
       mapper.Map(eventUpdateDto, existingEvent);
       await context.SaveChangesAsync();
@@ -68,11 +71,15 @@ public class EventController(AppDbContext context, IMapper mapper) : Controller
    public async Task<IActionResult> Patch(int id, [FromForm] EventUpdateDto eventUpdateDto)
    {
       var existingevent = await context.Events.FindAsync(id);
+
       if (existingevent == null)
       {
          return NotFound();
       }
-
+      var organizerExists = await context.Organizers.AnyAsync(o => o.Id == eventUpdateDto.OrganizerId);
+      if (!organizerExists)
+         return BadRequest("Organizer not found");
+      
       if (!string.IsNullOrEmpty(eventUpdateDto.Name))
       {
          existingevent.Title= eventUpdateDto.Name;
@@ -92,29 +99,30 @@ public class EventController(AppDbContext context, IMapper mapper) : Controller
       {
          return NotFound();
       }
+      
       context.Events.Remove(Event);
       await context.SaveChangesAsync();
       return NoContent();
    }
 
-   [HttpPost("{id}/banner")]
-   public async Task<IActionResult> AddFileToEvent(int id, [FromForm]EventCreateFileDto eventCreateFileDto)
-   {
-      var Event = await context.Events.FindAsync(id);
-      if (Event == null)
-      {
-         return NotFound();
-      }
-      if(Event.BannerImageUrl != null)
-      {
-         return BadRequest("This event already has a banner image.");
-      }
-      
-      mapper.Map(eventCreateFileDto, Event);
-      await context.SaveChangesAsync();
-      return NoContent();
-   }
-   
+   // [HttpPost("{id}/banner")]
+   // public async Task<IActionResult> AddFileToEvent(int id, [FromForm]EventCreateFileDto eventCreateFileDto)
+   // {
+   //    var Event = await context.Events.FindAsync(id);
+   //    if (Event == null)
+   //    {
+   //       return NotFound();
+   //    }
+   //    if(Event.BannerImageUrl != null)
+   //    {
+   //       return BadRequest("This event already has a banner image.");
+   //    }
+   //    
+   //    mapper.Map(eventCreateFileDto, Event);
+   //    await context.SaveChangesAsync();
+   //    return NoContent();
+   // }
+   //
    [HttpGet("{eventId}/tickets")]
    public async Task<ActionResult> GetTicketsByEvent(int eventId)
    {
@@ -140,8 +148,8 @@ public class EventController(AppDbContext context, IMapper mapper) : Controller
          return NotFound();
       }
       
-      var newEvent = mapper.Map<Event>(eventCreateDto);
-      context.Events.Add(newEvent);
+      var newTicket = mapper.Map<Ticket>(eventCreateDto);
+      context.Tickets.Add(newTicket);
       await context.SaveChangesAsync();
       return Created();
    }

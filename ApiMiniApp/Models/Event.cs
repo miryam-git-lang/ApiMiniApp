@@ -17,25 +17,3 @@ public class Event : AuditableEntity
     public List<Ticket>? Tickets { get; set; }
 }
 
-public class EventValidator : AbstractValidator<Event>
-{
-    public EventValidator()
-    {
-        RuleFor(x => x.Title)
-            .NotEmpty()
-            .WithMessage("Title is required")
-            .MaximumLength(200);
-        RuleFor(x => x.Description)
-            .MaximumLength(200);
-        RuleFor(x => x.Date)
-            .NotEmpty()
-            .WithMessage("Date is required")
-            .Must(date => date > DateTime.Now)
-            .WithMessage("Event date must be in the future");
-        RuleFor(x => x.Location)
-            .NotEmpty()
-            .WithMessage("Location is required")
-            .MaximumLength(200);
-
-    }
-}

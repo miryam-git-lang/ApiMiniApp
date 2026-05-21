@@ -21,7 +21,7 @@ public class OrganizerController(AppDbContext context, IMapper mapper) : Control
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult> Get(int id)
+    public async Task<ActionResult> Get([FromRoute]int id)
     {
         return Ok(await context.Organizers
             .Where(x => x.Id == id)
@@ -30,7 +30,7 @@ public class OrganizerController(AppDbContext context, IMapper mapper) : Control
         );
     }
     [HttpPost]
-    public async Task<ActionResult> Post([FromBody] OrganizerCreateDto organizerCreateDto)
+    public async Task<ActionResult> Post([FromForm] OrganizerCreateDto organizerCreateDto)
     {
         if (await context.Organizers.AnyAsync(o => o.Name == organizerCreateDto.Name))
         {
@@ -43,12 +43,8 @@ public class OrganizerController(AppDbContext context, IMapper mapper) : Control
     }
     
     [HttpPut("{id}")]
-    public async Task<IActionResult> Put(int id, [FromBody] OrganizerUpdateDto organizerUpdateDto)
+    public async Task<IActionResult> Put([FromRoute]int id, [FromForm] OrganizerUpdateDto organizerUpdateDto)
     {
-        if (id != organizerUpdateDto.Id)
-        {
-            return BadRequest();
-        }
         var existingorganizer = await context.Organizers.FindAsync(id);
         if (existingorganizer == null)
         {
@@ -65,7 +61,7 @@ public class OrganizerController(AppDbContext context, IMapper mapper) : Control
     }
 
     [HttpPatch("{id}")]
-    public async Task<IActionResult> Patch(int id, [FromBody] OrganizerUpdateDto organizerUpdateDto)
+    public async Task<IActionResult> Patch([FromRoute]int id, [FromForm] OrganizerUpdateDto organizerUpdateDto)
     {
         var existingorganizer = await context.Organizers.FindAsync(id);
         if (existingorganizer == null)
@@ -84,7 +80,7 @@ public class OrganizerController(AppDbContext context, IMapper mapper) : Control
     }
 
     [HttpDelete("{id}")]
-    public async Task<IActionResult> Delete(int id)
+    public async Task<IActionResult> Delete([FromRoute]int id)
     {
         var organizer = await context.Organizers.FindAsync(id);
       
@@ -97,7 +93,7 @@ public class OrganizerController(AppDbContext context, IMapper mapper) : Control
         return NoContent();
     }
     [HttpPost("{id}/logoUrl")]
-    public async Task<IActionResult> AddFileToorganizer(int id, [FromForm]OrganizerCreateFileDto organizerCreateFileDto)
+    public async Task<IActionResult> AddFileToorganizer([FromRoute]int id, [FromForm]OrganizerCreateFileDto organizerCreateFileDto)
     {
         var organizer = await context.Organizers.FindAsync(id);
         if (organizer == null)
@@ -114,7 +110,7 @@ public class OrganizerController(AppDbContext context, IMapper mapper) : Control
         return NoContent();
     }
     [HttpGet("{organizerId}/events")]
-    public async Task<ActionResult> GetEventsByOrganizer(int organizerId)
+    public async Task<ActionResult> GetEventsByOrganizer([FromRoute]int organizerId)
     {
         var organizerExist = await context.Organizers.AnyAsync(e => e.Id == organizerId);
         if (!organizerExist)
@@ -129,7 +125,7 @@ public class OrganizerController(AppDbContext context, IMapper mapper) : Control
     }
     
     [HttpPost("{organizerId}/logo")]
-    public async Task<ActionResult> AddFileToOrganizerById(int organizerId, [FromForm] OrganizerCreateFileDto organizerCreateFileDto)
+    public async Task<ActionResult> AddFileToOrganizerById([FromRoute]int organizerId, [FromForm] OrganizerCreateFileDto organizerCreateFileDto)
     {
         var organizerEntity = await context.Organizers.FindAsync(organizerId);
         if (organizerEntity == null)

@@ -12,23 +12,4 @@ public class Ticket : AuditableEntity
     public Event? Event { get; set; }
 }
 
-public class TicketValidator : AbstractValidator<Ticket>
-{
-    public TicketValidator()
-    {
-        RuleFor(x => x.Type)
-            .NotEmpty()
-            .WithMessage("Type is required")
-            .MaximumLength(20);
-        
-        RuleFor(x => x.Price)
-            .Must(price => price >= 0)
-            .WithMessage("Price must be a non-negative value");
-        
-        RuleFor(x => x.QuantityAvailable)  
-            .NotEmpty()
-            .Must(quantityAvailable => quantityAvailable > 0)
-            .WithMessage("Quantity available must be greater than zero");
-                
-    }
-}
+

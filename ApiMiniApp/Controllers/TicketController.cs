@@ -21,7 +21,7 @@ public class TicketController(AppDbContext context,IMapper mapper) : Controller
     }
 
     [HttpGet("{id}")]
-    public async Task<IActionResult> Get(int id)
+    public async Task<IActionResult> Get([FromRoute] int id)
     {
         return Ok(await context.Tickets
             .Where(x => x.Id == id)
@@ -39,12 +39,8 @@ public class TicketController(AppDbContext context,IMapper mapper) : Controller
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> Put(int id, [FromBody] TicketUpdateDto ticketUpdateDto)
+    public async Task<IActionResult> Put([FromRoute] int id, [FromBody] TicketUpdateDto ticketUpdateDto)
     {
-        if (id != ticketUpdateDto.Id)
-        {
-            return BadRequest();
-        }
         var existingTicket = await context.Tickets.FindAsync(id);
         if (existingTicket == null)
         {
@@ -57,7 +53,7 @@ public class TicketController(AppDbContext context,IMapper mapper) : Controller
     }
 
     [HttpPatch("{id}")]
-    public async Task<IActionResult> Patch(int id, [FromBody] TicketUpdateDto ticketUpdateDto)
+    public async Task<IActionResult> Patch([FromRoute] int id, [FromBody] TicketUpdateDto ticketUpdateDto)
     {
         var existingTicket = await context.Tickets.FindAsync(id);
         if (existingTicket == null)
@@ -75,7 +71,7 @@ public class TicketController(AppDbContext context,IMapper mapper) : Controller
     }
 
     [HttpDelete("{id}")]
-    public async Task<IActionResult> Delete(int id)
+    public async Task<IActionResult> Delete([FromRoute]int id)
     {
         var ticket = await context.Tickets.FindAsync(id);
       

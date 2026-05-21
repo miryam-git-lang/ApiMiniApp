@@ -1,5 +1,8 @@
 using ApiMiniApp.Data;
+using ApiMiniApp.Dtos;
 using ApiMiniApp.Models;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,6 +17,10 @@ builder.Services.AddAutoMapper(cfg=> cfg.AddMaps(typeof(Program).Assembly));
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(
     builder.Configuration.GetConnectionString("DefaultConnection"),
     sqlServerOptions => sqlServerOptions.EnableRetryOnFailure()));
+builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddScoped<IValidator<EventCreateDto>, EventCreateDtoValidator>();
+builder.Services.AddScoped<IValidator<OrganizerCreateDto>, OrganizerCreateDtoValidator>();
+builder.Services.AddScoped<IValidator<TicketCreateDto>, TicketCreateDtoValidator>();
 builder.Services.AddIdentity<AppUser, IdentityRole>(opt =>
 {
     opt.Password.RequireDigit = true;

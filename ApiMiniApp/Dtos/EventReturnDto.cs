@@ -9,7 +9,7 @@ public class EventReturnDto
     public DateTime Date { get; set; } 
     public string Location { get; set; } = null!;
     public string? BannerImageUrl { get; set; }
-    public List<OrganizerInEventReturnDto>? Organizers { get; set; }
+    public OrganizerInEventReturnDto? Organizer { get; set; }
 }
 
 public class OrganizerInEventReturnDto

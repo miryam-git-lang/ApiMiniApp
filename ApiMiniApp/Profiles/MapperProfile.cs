@@ -12,6 +12,7 @@ public class MapperProfile : Profile
         CreateMap<Event, EventsInOrganizerReturnDto>();
         CreateMap<EventCreateDto, Event>();
         CreateMap<Event, EventReturnDto>();
+        CreateMap<EventUpdateDto, Event>();
         
         CreateMap<Organizer, OrganizerInEventReturnDto>();
         CreateMap<OrganizerCreateDto, Organizer>();
@@ -19,7 +20,7 @@ public class MapperProfile : Profile
         
         CreateMap<TicketCreateDto, Ticket>();
         CreateMap<Ticket, TicketReturnDto>();
-        CreateMap<Ticket, TicketUpdateDto>();
+        CreateMap<TicketUpdateDto, Ticket>();
         
         CreateMap<EventCreateFileDto, Event>()
             .ForMember(dest => dest.BannerImageUrl, opt => opt.MapFrom(src => src.File.SaveFile("wwwroot/images")));

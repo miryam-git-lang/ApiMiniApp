@@ -12,22 +12,3 @@ public class Organizer : AuditableEntity
     public List<Event>? Events { get; set; }
 }
 
-public class OrganizerValidator : AbstractValidator<Organizer>
-{
-    public OrganizerValidator()
-    {
-        RuleFor(x => x.Name)
-            .NotEmpty()
-            .WithMessage("Name is required")
-            .MaximumLength(200);
-            
-        RuleFor(x => x.Email)
-            .NotEmpty()
-            .WithMessage("Email is required")
-            .EmailAddress()
-            .WithMessage("Invalid email format");
-
-        RuleFor(x => x.Phone)
-            .MaximumLength(20);
-    }
-}
