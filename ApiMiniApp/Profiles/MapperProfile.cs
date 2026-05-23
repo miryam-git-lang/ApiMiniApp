@@ -27,6 +27,6 @@ public class MapperProfile : Profile
         CreateMap<OrganizerCreateFileDto, Organizer>()
             .ForMember(dest => dest.LogoUrl, opt => opt.MapFrom(src => src.File.SaveFile("wwwroot/images")));
         
-
+        CreateMap<AppUser, UserReturnDto>();
     }
 }

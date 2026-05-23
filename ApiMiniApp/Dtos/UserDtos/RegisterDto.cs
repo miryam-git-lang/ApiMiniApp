@@ -5,17 +5,18 @@ namespace ApiMiniApp.Dtos;
 
 public class RegisterDto
 {
-    public string Name { get; set; } = null!;
+    public string FullName { get; set; } = null!;
     public string Username { get; set; } = null!;
     public string Email { get; set; } = null!;
     public string Password { get; set; } = null!;
+    public string RePassword { get; set; }
 }
 
 public class RegisterDtoValidator : AbstractValidator<RegisterDto> 
 {
     public RegisterDtoValidator()
     {
-        RuleFor(x => x.Name)
+        RuleFor(x => x.FullName)
             .NotEmpty()
             .WithMessage("Name is required")
             .MaximumLength(50)
@@ -34,6 +35,11 @@ public class RegisterDtoValidator : AbstractValidator<RegisterDto>
         RuleFor(x => x.Password)
             .NotEmpty()
             .WithMessage("Password is required");
+        RuleFor(x => x.RePassword)
+            .NotEmpty()
+            .WithMessage("RePassword is required")
+            .Equal(x => x.Password)
+            .WithMessage("Passwords do not match");
     }
     
 }

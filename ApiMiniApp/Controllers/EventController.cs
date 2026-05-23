@@ -104,25 +104,7 @@ public class EventController(AppDbContext context, IMapper mapper) : Controller
       await context.SaveChangesAsync();
       return NoContent();
    }
-
-   // [HttpPost("{id}/banner")]
-   // public async Task<IActionResult> AddFileToEvent(int id, [FromForm]EventCreateFileDto eventCreateFileDto)
-   // {
-   //    var Event = await context.Events.FindAsync(id);
-   //    if (Event == null)
-   //    {
-   //       return NotFound();
-   //    }
-   //    if(Event.BannerImageUrl != null)
-   //    {
-   //       return BadRequest("This event already has a banner image.");
-   //    }
-   //    
-   //    mapper.Map(eventCreateFileDto, Event);
-   //    await context.SaveChangesAsync();
-   //    return NoContent();
-   // }
-   //
+   
    [HttpGet("{eventId}/tickets")]
    public async Task<ActionResult> GetTicketsByEvent(int eventId)
    {

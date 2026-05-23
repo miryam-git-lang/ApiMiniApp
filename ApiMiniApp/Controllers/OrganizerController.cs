@@ -92,23 +92,7 @@ public class OrganizerController(AppDbContext context, IMapper mapper) : Control
         await context.SaveChangesAsync();
         return NoContent();
     }
-    [HttpPost("{id}/logoUrl")]
-    public async Task<IActionResult> AddFileToorganizer([FromRoute]int id, [FromForm]OrganizerCreateFileDto organizerCreateFileDto)
-    {
-        var organizer = await context.Organizers.FindAsync(id);
-        if (organizer == null)
-        {
-            return NotFound();
-        }
-        if(organizer.LogoUrl != null)
-        {
-            return BadRequest("This organizer already has a banner image.");
-        }
-      
-        mapper.Map(organizerCreateFileDto, organizer);
-        await context.SaveChangesAsync();
-        return NoContent();
-    }
+    
     [HttpGet("{organizerId}/events")]
     public async Task<ActionResult> GetEventsByOrganizer([FromRoute]int organizerId)
     {
@@ -141,5 +125,7 @@ public class OrganizerController(AppDbContext context, IMapper mapper) : Control
         await context.SaveChangesAsync();
         return NoContent();
     }
+    
+    
     
 }
