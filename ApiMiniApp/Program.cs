@@ -5,6 +5,7 @@ using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +22,7 @@ builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddScoped<IValidator<EventCreateDto>, EventCreateDtoValidator>();
 builder.Services.AddScoped<IValidator<OrganizerCreateDto>, OrganizerCreateDtoValidator>();
 builder.Services.AddScoped<IValidator<TicketCreateDto>, TicketCreateDtoValidator>();
+builder.Services.AddScoped<IValidator<RegisterDto>, RegisterDtoValidator>();
 builder.Services.AddIdentity<AppUser, IdentityRole>(opt =>
 {
     opt.Password.RequireDigit = true;
@@ -31,6 +33,12 @@ builder.Services.AddIdentity<AppUser, IdentityRole>(opt =>
 }).AddEntityFrameworkStores<AppDbContext>();
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+    await RoleSeeder.SeedRolesAsync(roleManager);
+}
 
 // Configure the HTTP request pipeline.
 
@@ -46,4 +54,3 @@ app.UseHttpsRedirection();
 app.MapControllers();  
 
 app.Run();
-
