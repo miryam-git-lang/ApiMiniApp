@@ -1,10 +1,6 @@
 {
   "version": 2,
-<<<<<<< HEAD
   "dgSpecHash": "WZerXMljgTM=",
-=======
-  "dgSpecHash": "DCR2W+zr1dg=",
->>>>>>> origin/main
   "success": true,
   "projectFilePath": "/Users/miriam/Desktop/Academy Tasks/Mini Apps/ApiMiniApp/ApiMiniApp/ApiMiniApp.csproj",
   "expectedPackageFiles": [
@@ -37,7 +33,6 @@
     "/Users/miriam/.nuget/packages/microsoft.entityframeworkcore.sqlserver/10.0.7/microsoft.entityframeworkcore.sqlserver.10.0.7.nupkg.sha512",
     "/Users/miriam/.nuget/packages/microsoft.entityframeworkcore.tools/10.0.7/microsoft.entityframeworkcore.tools.10.0.7.nupkg.sha512",
     "/Users/miriam/.nuget/packages/microsoft.extensions.apidescription.server/6.0.5/microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
-    "/Users/miriam/.nuget/packages/microsoft.extensions.dependencyinjection.abstractions/2.1.0/microsoft.extensions.dependencyinjection.abstractions.2.1.0.nupkg.sha512",
     "/Users/miriam/.nuget/packages/microsoft.extensions.dependencymodel/10.0.7/microsoft.extensions.dependencymodel.10.0.7.nupkg.sha512",
     "/Users/miriam/.nuget/packages/microsoft.extensions.identity.core/10.0.7/microsoft.extensions.identity.core.10.0.7.nupkg.sha512",
     "/Users/miriam/.nuget/packages/microsoft.identity.client/4.73.1/microsoft.identity.client.4.73.1.nupkg.sha512",
@@ -75,7 +70,7 @@
     {
       "code": "NU1510",
       "level": "Warning",
-      "message": "PackageReference Microsoft.Extensions.Identity.Core will not be pruned. Consider removing this package from your dependencies, as it is likely unnecessary.",
+      "message": "PackageReference Microsoft.Extensions.Identity.Core не будет урезано. Рассмотрите возможность удаления этого пакета из зависимостей, так как он, вероятно, не требуется.",
       "projectPath": "/Users/miriam/Desktop/Academy Tasks/Mini Apps/ApiMiniApp/ApiMiniApp/ApiMiniApp.csproj",
       "warningLevel": 1,
       "filePath": "/Users/miriam/Desktop/Academy Tasks/Mini Apps/ApiMiniApp/ApiMiniApp/ApiMiniApp.csproj",

@@ -298,6 +298,32 @@ namespace ApiMiniApp.Migrations
                         });
                 });
 
+            modelBuilder.Entity("ApiMiniApp.Models.RefreshTokenSetting", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("Expires")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Token")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("RefreshTokenSettings");
+                });
+
             modelBuilder.Entity("ApiMiniApp.Models.Ticket", b =>
                 {
                     b.Property<int>("Id")
@@ -620,6 +646,17 @@ namespace ApiMiniApp.Migrations
                         .IsRequired();
 
                     b.Navigation("Organizer");
+                });
+
+            modelBuilder.Entity("ApiMiniApp.Models.RefreshTokenSetting", b =>
+                {
+                    b.HasOne("ApiMiniApp.Models.AppUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("ApiMiniApp.Models.Ticket", b =>

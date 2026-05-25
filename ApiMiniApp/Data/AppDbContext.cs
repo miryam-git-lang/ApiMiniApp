@@ -12,6 +12,7 @@ public class AppDbContext : IdentityDbContext<AppUser>
     public DbSet<Ticket> Tickets { get; set; } 
     public DbSet<Organizer> Organizers { get; set; } 
     public DbSet<AppUser> AppUsers { get; set; }
+    public DbSet<RefreshTokenSetting> RefreshTokenSettings { get; set; }
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
     {
         
