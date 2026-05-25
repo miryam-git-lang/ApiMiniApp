@@ -1,6 +1,10 @@
 {
   "version": 2,
+<<<<<<< HEAD
   "dgSpecHash": "WZerXMljgTM=",
+=======
+  "dgSpecHash": "DCR2W+zr1dg=",
+>>>>>>> origin/main
   "success": true,
   "projectFilePath": "/Users/miriam/Desktop/Academy Tasks/Mini Apps/ApiMiniApp/ApiMiniApp/ApiMiniApp.csproj",
   "expectedPackageFiles": [
