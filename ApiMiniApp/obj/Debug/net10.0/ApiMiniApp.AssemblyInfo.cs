@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ApiMiniApp")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c0dca30f6fc24802e1fdcd8127edfef237c598eb")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+32c446a85bf2dae635d8148db94fed297ad5363a")]
 [assembly: System.Reflection.AssemblyProductAttribute("ApiMiniApp")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ApiMiniApp")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -66,6 +66,7 @@ builder.Services.AddScoped<IValidator<OrganizerCreateDto>, OrganizerCreateDtoVal
 builder.Services.AddScoped<IValidator<TicketCreateDto>, TicketCreateDtoValidator>();
 builder.Services.AddScoped<IValidator<RegisterDto>, RegisterDtoValidator>();
 builder.Services.AddScoped<IEmailService, EmailService>();
+builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddIdentity<AppUser, IdentityRole>(opt =>
 {
     opt.Password.RequireDigit = true;
@@ -73,6 +74,7 @@ builder.Services.AddIdentity<AppUser, IdentityRole>(opt =>
     opt.Password.RequireUppercase = true;
     opt.Password.RequiredLength = 6;
     opt.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+    opt.SignIn.RequireConfirmedEmail = false;
 }).AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
 builder.Services.Configure<JwtSetting>(builder.Configuration.GetSection("Jwt"));
 builder.Services.AddAuthentication(options =>

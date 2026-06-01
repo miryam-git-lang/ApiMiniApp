@@ -1,0 +1,71 @@
+@model RegisterVm
+
+@{
+    ViewData["Title"] = "Register";
+}
+
+<div class="row justify-content-center mt-5">
+    <div class="col-md-6">
+        <div class="card shadow">
+            <div class="card-body">
+                <h2 class="card-title text-center mb-4">Регистрация</h2>
+                
+                @if (!ViewData.ModelState.IsValid)
+                {
+                    <div class="alert alert-danger" role="alert">
+                        <ul>
+                            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                            {
+                                <li>@error.ErrorMessage</li>
+                            }
+                        </ul>
+                    </div>
+                }
+
+                <form method="post" asp-action="Register" asp-controller="UIAccount">
+                    <div class="mb-3">
+                        <label for="fullName" class="form-label">Полное имя</label>
+                        <input type="text" class="form-control" id="fullName" asp-for="FullName" required>
+                        <span asp-validation-for="FullName" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Имя пользователя</label>
+                        <input type="text" class="form-control" id="username" asp-for="Username" required>
+                        <span asp-validation-for="Username" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" asp-for="Email" required>
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Пароль</label>
+                        <input type="password" class="form-control" id="password" asp-for="Password" required>
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="rePassword" class="form-label">Повторите пароль</label>
+                        <input type="password" class="form-control" id="rePassword" asp-for="RePassword" required>
+                        <span asp-validation-for="RePassword" class="text-danger"></span>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100">Зарегистрироваться</button>
+                </form>
+
+                <hr>
+                <p class="text-center">
+                    Уже есть аккаунт? <a asp-action="Login" asp-controller="UIAccount">Войти</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+

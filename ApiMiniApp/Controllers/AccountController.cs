@@ -18,43 +18,10 @@ namespace ApiMiniApp.Controllers;
 [ApiController]
 public class AccountController(
     UserManager<AppUser> userManager,
-    IOptions<JwtSetting> jwtSettings,
     IEmailService emailService,
+    IJwtService jwtService,
     AppDbContext context) : ControllerBase
 {
-    async Task<string> GenerateJwt(AppUser appUser, List<Claim> claimsList)
-    {
-        var roles = await userManager.GetRolesAsync(appUser);
-        claimsList.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
-        var jwtSetting = jwtSettings.Value;
-        var keys = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSetting.Key));
-        var creds = new SigningCredentials(keys, SecurityAlgorithms.HmacSha256);
-        var token = new JwtSecurityToken(
-            issuer: jwtSetting.Issuer,
-            audience: jwtSetting.Audience,
-            claims: claimsList,
-            expires: DateTime.Now.AddMinutes(jwtSetting.Expire),
-            signingCredentials: creds
-        );
-        return new JwtSecurityTokenHandler().WriteToken(token);
-    }
-    
-    async Task<string> GenerateRefreshJwt(AppUser appUser)
-    {
-        var refreshTokenValidity = DateTime.Now.AddMinutes(jwtSettings.Value.Expire);
-        var refreshTokenEntity = new RefreshTokenSetting()
-        {
-            UserId = appUser.Id,
-            Token = Guid.NewGuid().ToString(),
-            Expires = refreshTokenValidity,
-        };
-            
-        context.RefreshTokenSettings.Add(refreshTokenEntity);
-        await context.SaveChangesAsync();
-            
-        return refreshTokenEntity.Token;
-    }
-
     [HttpGet("profile")]
     [Authorize]
     public async Task<IActionResult> GetProfile()
@@ -124,7 +91,7 @@ public class AccountController(
     public async Task<IActionResult> Login([FromBody] LoginDto loginDto)
     {
         var user = await userManager.FindByNameAsync(loginDto.UserNameOrEmail)
-                ?? await userManager.FindByEmailAsync(loginDto.UserNameOrEmail);
+                   ?? await userManager.FindByEmailAsync(loginDto.UserNameOrEmail);
 
         if (user == null)
             return Unauthorized("Invalid username or password.");
@@ -142,11 +109,11 @@ public class AccountController(
             new Claim(ClaimTypes.Name, user.UserName),
             new Claim("FullName", user.FullName),
         };
-        var tokenString = await GenerateJwt(user, claims);
-        var refreshToken = await GenerateRefreshJwt(user);
+        var tokenString = await jwtService.GenerateJwt(user, claims);
+        var refreshToken = await jwtService.GenerateRefreshJwt(user);
         return Ok(new { Token = tokenString, RefreshToken = refreshToken });
     }
-    
+
     [HttpPost("change-password")]
     [Authorize]
     public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordDto dto)
@@ -172,10 +139,10 @@ public class AccountController(
             return Ok("If an account with that email exists, a password reset link has been sent.");
 
         var token = await userManager.GeneratePasswordResetTokenAsync(user);
-        return Ok(new 
-        { 
+        return Ok(new
+        {
             token = token,
-            email = dto.Email 
+            email = dto.Email
         });
     }
 
@@ -199,18 +166,14 @@ public class AccountController(
         var refreshToken = await context.RefreshTokenSettings
             .FirstOrDefaultAsync(rt => rt.Token == dto.RefreshToken);
 
-        if (refreshToken == null || refreshToken.Expires < DateTime.UtcNow)
+        if (refreshToken == null || refreshToken.Expires < DateTime.Now)
             return Unauthorized("Invalid or expired refresh token");
 
         var user = await userManager.FindByIdAsync(refreshToken.UserId);
         if (user == null)
             return Unauthorized("User not found");
-        
+
         context.RefreshTokenSettings.Remove(refreshToken);
-        
-        var expiredTokens = context.RefreshTokenSettings
-            .Where(rt => rt.UserId == user.Id && rt.Expires < DateTime.UtcNow);
-        context.RefreshTokenSettings.RemoveRange(expiredTokens);
 
         var claims = new List<Claim>
         {
@@ -219,11 +182,9 @@ public class AccountController(
             new Claim("FullName", user.FullName),
         };
 
-        var newToken = await GenerateJwt(user, claims);
-        var newRefreshToken = await GenerateRefreshJwt(user); 
+        var newToken = await jwtService.GenerateJwt(user, claims);
+        var newRefreshToken = await jwtService.GenerateRefreshJwt(user);
 
         return Ok(new { Token = newToken, RefreshToken = newRefreshToken });
     }
-    
 }
-

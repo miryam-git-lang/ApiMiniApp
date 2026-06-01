@@ -1,0 +1,53 @@
+@model LoginVm
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+<div class="row justify-content-center mt-5">
+    <div class="col-md-5">
+        <div class="card shadow">
+            <div class="card-body">
+                <h2 class="card-title text-center mb-4">Вход</h2>
+                
+                @if (!ViewData.ModelState.IsValid)
+                {
+                    <div class="alert alert-danger" role="alert">
+                        <ul>
+                            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                            {
+                                <li>@error.ErrorMessage</li>
+                            }
+                        </ul>
+                    </div>
+                }
+
+                <form method="post" asp-action="Login" asp-controller="UIAccount">
+                    <div class="mb-3">
+                        <label for="userNameOrEmail" class="form-label">Имя пользователя или Email</label>
+                        <input type="text" class="form-control" id="userNameOrEmail" asp-for="UsernameOrEmail" required>
+                        <span asp-validation-for="UsernameOrEmail" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Пароль</label>
+                        <input type="password" class="form-control" id="password" asp-for="Password" required>
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100">Войти</button>
+                </form>
+
+                <hr>
+                <p class="text-center">
+                    Нет аккаунта? <a asp-action="Register" asp-controller="UIAccount">Зарегистрироваться</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
