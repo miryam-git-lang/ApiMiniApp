@@ -3,17 +3,17 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Добро пожаловать</h1>
-    <p class="lead">Это главная страница приложения для управления событиями.</p>
+    <h1 class="display-4">Welcome</h1>
+    <p class="lead">This is the main page of the event management application.</p>
 </div>
 
 <div class="row mt-5">
     <div class="col-md-4 text-center">
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">🔐 Уже зарегистрированы?</h5>
-                <p class="card-text">Войдите в ваш аккаунт</p>
-                <a href="@Url.Action("Login", "UIAccount")" class="btn btn-primary">Войти</a>
+                <h5 class="card-title">🔐 Already registered?</h5>
+                <p class="card-text">Sign in to your account</p>
+                <a href="@Url.Action("Login", "UIAccount")" class="btn btn-primary">Sign In</a>
             </div>
         </div>
     </div>
@@ -21,9 +21,9 @@
     <div class="col-md-4 text-center">
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">✍️ Новый пользователь?</h5>
-                <p class="card-text">Создайте свой аккаунт</p>
-                <a href="@Url.Action("Register", "UIAccount")" class="btn btn-success">Зарегистрироваться</a>
+                <h5 class="card-title">✍️ New user?</h5>
+                <p class="card-text">Create your account</p>
+                <a href="@Url.Action("Register", "UIAccount")" class="btn btn-success">Register</a>
             </div>
         </div>
     </div>
@@ -31,9 +31,9 @@
     <div class="col-md-4 text-center">
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">📅 События</h5>
-                <p class="card-text">Посмотреть все события</p>
-                <a href="@Url.Action("Index", "Event")" class="btn btn-info">События</a>
+                <h5 class="card-title">📅 Events</h5>
+                <p class="card-text">View all events</p>
+                <a href="@Url.Action("Index", "UIEvents")" class="btn btn-info">Events</a>
             </div>
         </div>
     </div>
@@ -43,13 +43,12 @@
 
 <div class="row mt-5">
     <div class="col-md-12">
-        <h3>Особенности платформы</h3>
+        <h3>Platform Features</h3>
         <ul class="list-group">
-            <li class="list-group-item">✔️ Управление событиями</li>
-            <li class="list-group-item">✔️ Регистрация на события</li>
-            <li class="list-group-item">✔️ Управление билетами</li>
-            <li class="list-group-item">✔️ Профиль пользователя</li>
+            <li class="list-group-item">✔️ Event Management</li>
+            <li class="list-group-item">✔️ Event Registration</li>
+            <li class="list-group-item">✔️ Ticket Management</li>
+            <li class="list-group-item">✔️ User Profile</li>
         </ul>
     </div>
 </div>
-

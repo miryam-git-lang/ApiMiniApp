@@ -8,7 +8,7 @@
     <div class="col-md-6">
         <div class="card shadow">
             <div class="card-body">
-                <h2 class="card-title text-center mb-4">Регистрация</h2>
+                <h2 class="card-title text-center mb-4">Register</h2>
                 
                 @if (!ViewData.ModelState.IsValid)
                 {
@@ -24,13 +24,13 @@
 
                 <form method="post" asp-action="Register" asp-controller="UIAccount">
                     <div class="mb-3">
-                        <label for="fullName" class="form-label">Полное имя</label>
+                        <label for="fullName" class="form-label">FullName</label>
                         <input type="text" class="form-control" id="fullName" asp-for="FullName" required>
                         <span asp-validation-for="FullName" class="text-danger"></span>
                     </div>
 
                     <div class="mb-3">
-                        <label for="username" class="form-label">Имя пользователя</label>
+                        <label for="username" class="form-label">Username</label>
                         <input type="text" class="form-control" id="username" asp-for="Username" required>
                         <span asp-validation-for="Username" class="text-danger"></span>
                     </div>
@@ -42,23 +42,23 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="password" class="form-label">Пароль</label>
+                        <label for="password" class="form-label">Password</label>
                         <input type="password" class="form-control" id="password" asp-for="Password" required>
                         <span asp-validation-for="Password" class="text-danger"></span>
                     </div>
 
                     <div class="mb-3">
-                        <label for="rePassword" class="form-label">Повторите пароль</label>
+                        <label for="rePassword" class="form-label">RePassword</label>
                         <input type="password" class="form-control" id="rePassword" asp-for="RePassword" required>
                         <span asp-validation-for="RePassword" class="text-danger"></span>
                     </div>
 
-                    <button type="submit" class="btn btn-primary w-100">Зарегистрироваться</button>
+                    <button type="submit" class="btn btn-primary w-100">Register</button>
                 </form>
 
                 <hr>
                 <p class="text-center">
-                    Уже есть аккаунт? <a asp-action="Login" asp-controller="UIAccount">Войти</a>
+                    Already have an account? <a asp-action="Login" asp-controller="UIAccount">Login</a>
                 </p>
             </div>
         </div>

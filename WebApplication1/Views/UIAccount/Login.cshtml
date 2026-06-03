@@ -8,7 +8,7 @@
     <div class="col-md-5">
         <div class="card shadow">
             <div class="card-body">
-                <h2 class="card-title text-center mb-4">Вход</h2>
+                <h2 class="card-title text-center mb-4">Login</h2>
                 
                 @if (!ViewData.ModelState.IsValid)
                 {
@@ -24,23 +24,23 @@
 
                 <form method="post" asp-action="Login" asp-controller="UIAccount">
                     <div class="mb-3">
-                        <label for="userNameOrEmail" class="form-label">Имя пользователя или Email</label>
+                        <label for="userNameOrEmail" class="form-label">Username or Email</label>
                         <input type="text" class="form-control" id="userNameOrEmail" asp-for="UsernameOrEmail" required>
                         <span asp-validation-for="UsernameOrEmail" class="text-danger"></span>
                     </div>
 
                     <div class="mb-3">
-                        <label for="password" class="form-label">Пароль</label>
+                        <label for="password" class="form-label">Password</label>
                         <input type="password" class="form-control" id="password" asp-for="Password" required>
                         <span asp-validation-for="Password" class="text-danger"></span>
                     </div>
 
-                    <button type="submit" class="btn btn-primary w-100">Войти</button>
+                    <button type="submit" class="btn btn-primary w-100">Login</button>
                 </form>
 
                 <hr>
                 <p class="text-center">
-                    Нет аккаунта? <a asp-action="Register" asp-controller="UIAccount">Зарегистрироваться</a>
+                    Dont have an account? <a asp-action="Register" asp-controller="UIAccount">Register</a>
                 </p>
             </div>
         </div>

@@ -99,13 +99,21 @@ public class UIAccountController : Controller
                 Response.Cookies.Append("AuthToken", tokenResponse.Token, new CookieOptions
                 {
                     HttpOnly = true,
-                    Secure = true,
+                    Secure = false,
                     SameSite = SameSiteMode.Strict,
                     Expires = DateTimeOffset.Now.AddHours(24)
+                });
+                Response.Cookies.Append("RefreshToken", tokenResponse.RefreshToken, new CookieOptions
+                {
+                    HttpOnly = true,
+                    Secure = false,
+                    SameSite = SameSiteMode.Strict,
+                    Expires = DateTimeOffset.Now.AddDays(7)
                 });
                 TempData["SuccessMessage"] = "Successfully LoggedIn";
                 return RedirectToAction("Index", "Home");
             }
+            
             else
             {
                 ModelState.AddModelError(string.Empty, "Failed to retrieve authentication token");

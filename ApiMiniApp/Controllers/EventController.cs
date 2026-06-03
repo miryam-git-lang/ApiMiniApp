@@ -3,29 +3,38 @@ using ApiMiniApp.Dtos;
 using ApiMiniApp.Models;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace ApiMiniApp.Controllers;
 [Route("api/[controller]")]
 [ApiController]
+[Authorize]
 public class EventController(AppDbContext context, IMapper mapper) : Controller
 {
    [HttpGet]
-   public async Task <IActionResult> Get()
+   public async Task<IActionResult> Get()
    {
-      return Ok(await context.Events
-         .ProjectTo<EventReturnDto>(mapper.ConfigurationProvider)
-         .ToListAsync());
+      var events = await context.Events
+         .Include(e => e.Organizer)
+         .Include(e => e.Tickets)
+         .ToListAsync();
+
+      return Ok(mapper.Map<List<EventReturnDto>>(events));
    }
 
    [HttpGet("{id}")]
-   public async Task<IActionResult> Get([FromRoute]int id)
+   public async Task<IActionResult> Get([FromRoute] int id)
    {
-      return Ok(await context.Events
-         .Where(x => x.Id == id)
-         .ProjectTo<EventReturnDto>(mapper.ConfigurationProvider)
-         .FirstOrDefaultAsync());
+      var ev = await context.Events
+         .Include(e => e.Organizer)
+         .Include(e => e.Tickets)
+         .FirstOrDefaultAsync(x => x.Id == id);
+
+      if (ev == null) return NotFound();
+
+      return Ok(mapper.Map<EventReturnDto>(ev));
    }
 
    [HttpPost]

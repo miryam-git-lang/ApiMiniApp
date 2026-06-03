@@ -10,14 +10,16 @@ public class MapperProfile : Profile
     public MapperProfile()
     {
         CreateMap<Event, EventsInOrganizerReturnDto>();
+        CreateMap<Event, EventsInOrganizerReturnDto>();
         CreateMap<EventCreateDto, Event>();
         CreateMap<Event, EventReturnDto>();
         CreateMap<EventUpdateDto, Event>();
 
-        CreateMap<Organizer, OrganizerInEventReturnDto>();
+        CreateMap<Organizer, OrganizerInEvent>();
         CreateMap<OrganizerCreateDto, Organizer>();
         CreateMap<Organizer, OrganizerReturnDto>();
 
+        CreateMap<Ticket, TicketsInEvent>();
         CreateMap<TicketCreateDto, Ticket>();
         CreateMap<Ticket, TicketReturnDto>();
         CreateMap<TicketUpdateDto, Ticket>();

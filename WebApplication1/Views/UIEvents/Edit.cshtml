@@ -1,0 +1,80 @@
+@model WebApplication1.Models.EditEventVm
+
+@{
+    ViewData["Title"] = "Edit Event";
+}
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-warning text-white">
+                    <h4 class="mb-0">✏️ Edit Event</h4>
+                </div>
+                
+                <div class="card-body">
+                    @if (!ViewData.ModelState.IsValid)
+                    {
+                        <div class="alert alert-danger" role="alert">
+                            <h5>Validation Errors:</h5>
+                            <ul>
+                                @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                                {
+                                    <li>@error.ErrorMessage</li>
+                                }
+                            </ul>
+                        </div>
+                    }
+
+                    <form method="post" asp-action="Edit" asp-controller="UIEvents">
+                        <div class="mb-3">
+                            <label for="Title" class="form-label">Event Title <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="Title" asp-for="Name" required>
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="Description" class="form-label">Description</label>
+                            <textarea class="form-control" id="Description" asp-for="Description" rows="4" placeholder="Enter event description..."></textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="Date" class="form-label">Date and Time <span class="text-danger">*</span></label>
+                                    <input type="datetime-local" class="form-control" id="Date" asp-for="Date" required>
+                                    <span asp-validation-for="Date" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="Location" class="form-label">Location <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="Location" asp-for="Location" placeholder="City, address..." required>
+                                    <span asp-validation-for="Location" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="OrganizerId" class="form-label">Organizer ID <span class="text-danger">*</span></label>
+                            <input type="number" class="form-control" id="OrganizerId" asp-for="OrganizerId" required>
+                            <span asp-validation-for="OrganizerId" class="text-danger"></span>
+                        </div>
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a href="@Url.Action("Index", "UIEvents")" class="btn btn-secondary">Cancel</a>
+                            <button type="submit" class="btn btn-warning">Update Event</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+

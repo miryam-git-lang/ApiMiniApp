@@ -1,0 +1,13 @@
+using ApiMiniApp.Models;
+
+namespace WebApplication1.Models;
+
+public class CreateEventVm
+{
+    
+    public string Title { get; set; } = null!;
+    public string? Description { get; set; }
+    public DateTime Date { get; set; } 
+    public string Location { get; set; } = null!;
+    public int OrganizerId { get; set; }
+}

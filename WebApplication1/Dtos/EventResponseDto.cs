@@ -1,17 +1,13 @@
-using ApiMiniApp.Models;
+namespace WebApplication1.Dtos;
 
-namespace ApiMiniApp.Dtos;
-
-public class EventReturnDto 
+public class EventReaponseDto 
 {
-    public int Id { get; set; }
     public string Title { get; set; } = null!;
     public string? Description { get; set; }
     public DateTime Date { get; set; } 
     public string Location { get; set; } = null!;
     public string? BannerImageUrl { get; set; }
     public OrganizerInEvent? Organizer { get; set; }
-    public List<TicketsInEvent> Tickets { get; set; }
 }
 
 public class OrganizerInEvent
@@ -19,11 +15,4 @@ public class OrganizerInEvent
     public string Name { get; set; } = null!;
     public string Email { get; set; } = null!;
     public string? Phone { get; set; }
-}
-
-public class TicketsInEvent
-{
-    public string Type { get; set; } = null!;
-    public decimal Price { get; set; }
-    public int QuantityAvailable { get; set; }
 }

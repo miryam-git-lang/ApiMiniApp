@@ -1,0 +1,59 @@
+@using ApiMiniApp.Dtos
+@model WebApplication1.Models.CreateEventFileVm
+
+@{
+    ViewData["Title"] = "Upload Banner";
+}
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-success text-white">
+                    <h4 class="mb-0">📤 Upload Event Banner</h4>
+                </div>
+
+                <div class="card-body">
+                    @if (!ViewData.ModelState.IsValid)
+                    {
+                        <div class="alert alert-danger" role="alert">
+                            <h5>Validation Errors:</h5>
+                            <ul>
+                                @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                                {
+                                    <li>@error.ErrorMessage</li>
+                                }
+                            </ul>
+                        </div>
+                    }
+
+                    <form method="post" asp-action="CreateFile" asp-controller="UIEvents" enctype="multipart/form-data">
+                        <select class="form-select" id="EventId" asp-for="EventId" required>
+                            
+                            <option value="">-- Select Event --</option>
+                            @foreach (var ev in (ViewBag.Events as List<EventReturnDto>) ?? new List<EventReturnDto>())
+                            {
+                                <option value="@ev.Id">@ev.Title</option>
+                            }
+                        </select>
+
+                        <div class="mb-3">
+                            <label for="File" class="form-label">Banner Image <span class="text-danger">*</span></label>
+                            <input type="file" class="form-control" id="File" asp-for="File" accept="image/*" required>
+                            <span asp-validation-for="File" class="text-danger"></span>
+                        </div>
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a href="@Url.Action("Index", "UIEvents")" class="btn btn-secondary">Cancel</a>
+                            <button type="submit" class="btn btn-success">Upload Banner</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}
